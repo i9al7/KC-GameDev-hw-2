@@ -7,7 +7,6 @@ public class ball : MonoBehaviour
     public float speed;
     Rigidbody2D RB;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -23,14 +22,8 @@ public class ball : MonoBehaviour
 
     void Launch()
     {
-        float direction = Random.Range(0,1);
-        if (direction == 0f)
-        {
-            RB.velocity = new Vector2(-speed, 0);
-        }
-        else
-        {
-            RB.velocity = new Vector2(speed, 0);
-        }
+        float x = Random.Range(0, 2) == 0 ? -1 : 1;
+        float y = Random.Range(0, 2) == 0 ? -1 : 1;
+        RB.velocity = new Vector2(speed * x, speed * y);
     }
 }
