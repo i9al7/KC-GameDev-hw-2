@@ -1,29 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ball : MonoBehaviour
-{   
-    public float speed;
-    Rigidbody2D RB;
+public class Ball : MonoBehaviour
+{
+    private Rigidbody2D _rigidbody;
+    public float speed = 200.0f;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        RB = this.GetComponent<Rigidbody2D>();
-        Launch();
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
+        ResetPosition();
         
     }
 
-    void Launch()
+    public void ResetPosition()
     {
-        float x = Random.Range(0, 2) == 0 ? -1 : 1;
-        float y = Random.Range(0, 2) == 0 ? -1 : 1;
-        RB.velocity = new Vector2(speed * x, speed * y);
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.position = Vector3.zero;
+
+        AddStartingForce();
+    }
+
+    private void AddStartingForce()
+    {
+        float x = Random.value < 0.5f ? -1.0f : 1.0f;
+        float y = Random.value < 0.5f ? Random.Range(-1.0f, -0.5f) :
+                                        Random.Range(0.5f, 1.0f);
+
+        Vector2 direction = new Vector2(x, y);
+        _rigidbody.AddForce(direction * this.speed);
+    }
+
+    public void AddForce(Vector2 force)
+    {
+        _rigidbody.AddForce(force);
     }
 }
